@@ -1,0 +1,216 @@
+Mahsus_Saidabror_SiddiqjonovM
+Bilet raqam: B30102024FSIN15
+1-savol 
+using System;
+
+namespace M_Saidabror_Siddiqjonov_M
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            for (int i = 2; i <= 800; i++)
+            {
+                if(DetectPrime(i))
+                {
+                    Console.Write(i + ",");
+                }
+            }
+        }
+        static bool DetectPrime(int n)
+        {
+            if (n % 2 == 0) return false;
+            for (int i = 3; i < n; i+=2)
+            {
+                if (n % i == 0)
+                    return false;
+            }
+            return true;
+        }
+    }
+}
+
+2-savol 
+
+using System;
+
+namespace Mahsus_Saidabror_SiddiqjonovM
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Sun kiriting: (son >= 3) ");
+            int num = int.Parse(Console.ReadLine());
+            Plus(num);
+
+            Console.ReadLine();
+        }
+        static void Plus(int num)
+        {
+            string space = "";
+
+            for (int i = 0; i < num / 2; i++)
+                space += " ";
+
+            for (int i = 0; i < num / 2; i++)
+            {
+                Console.WriteLine(space + "+");
+            }
+            for (int i = 0; i < num; i++)
+            {
+                Console.Write("+");
+            }
+            Console.WriteLine();
+            for (int i = 0; i < num / 2; i++)
+            {
+                Console.WriteLine(space + "+");
+            }
+        }
+    }
+}
+
+3-savol 
+
+using System;
+
+namespace Mahsus_Saidabror_Siddiqjonov_M_3
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Enter a number: ");
+            int n = int.Parse(Console.ReadLine());
+            int[] array = new int[n];
+
+            OddsAndEvens(array);
+
+
+            Console.ReadLine();
+        }
+        static void OddsAndEvens(int[] array)
+        {
+            int countOdd = 0;
+            int countEven = 0;
+            Random rnd = new Random();
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = rnd.Next(1, 20);
+                Console.Write(array[i]);
+                if (i < array.Length - 1) Console.Write(",");
+                if (array[i] % 2 != 0)
+                    countOdd++;
+                else 
+                    countEven++;
+            }
+            Console.WriteLine();
+            Console.WriteLine($"Massivda {countOdd} ta toq va {countEven} ta juft son bor.");
+        }
+    }
+}
+
+4-savol 
+
+using System;
+
+namespace Mahsus_Saidabror_Siddiqjonov_M_4
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("N sonini kiriting: ");
+            int n = int.Parse(Console.ReadLine());
+            Console.Write("M sonini kiriting: ");
+            int m = int.Parse(Console.ReadLine());
+            TwoDArray(n, m);
+
+            Console.ReadKey();
+        }
+        static void TwoDArray(int n, int m)
+        {
+            int[,] twoArray = new int[n, m];
+            Random random = new Random();
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    twoArray[i, j] = random.Next(1, 20);
+                    Console.Write(twoArray[i,j] + " ");
+                }
+                Console.WriteLine();
+            }
+            int sum = 0;
+            for (int i = 0;i < n; i++)
+            {
+                for(int j = 0; j < m; j++)
+                {
+                    sum += twoArray[i, j];
+                }
+            }
+            Console.WriteLine($"Ushbu sonlarning yig'indisi {sum} ga teng");
+        }
+    }
+}
+
+5-savol 
+
+using System;
+
+namespace Mahsus_Saidabror_Siddiqjonov_M_5
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Birnarsa yozing: ");
+            string input = Console.ReadLine();
+            string result = WithoutNum(input);
+            Console.WriteLine(result);
+            Console.ReadLine();
+        }
+        static string WithoutNum(string input)
+        {
+            string withoutNums = input;
+            for (int i = 0; i < 10; i++)
+            {
+                withoutNums = withoutNums.Replace(Convert.ToString(i), "");
+            }
+            return withoutNums;
+        }
+    }
+}
+
+6-savol 
+
+using System;
+
+namespace Mahsus_Saidabror_SiddiqjonovM_6
+{
+    internal class Program
+    {
+
+        static void Main(string[] args)
+        {
+            // Task 6
+            Console.Write("Satr kiriting: ");
+            string input = Console.ReadLine();
+            Method(input);
+
+            Console.ReadLine();
+        }
+        static void Method(string input)
+        {
+            int countPlus = 0;
+            foreach (char plus  in input)
+            {
+                if(plus == '+')
+                {
+                    countPlus++;
+                }
+            }
+            Console.WriteLine($"{input} so'zida {countPlus} ta + bor");
+        }
+    }
+}
