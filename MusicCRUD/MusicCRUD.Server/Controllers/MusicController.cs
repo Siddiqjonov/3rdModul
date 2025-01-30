@@ -28,7 +28,7 @@ namespace MusicCRUD.Server.Controllers
             var musicList = _musicService.GetAllMusic();
             return musicList;
         }
-        [HttpDelete("deleteMusic")]
+        [HttpDelete("deleteMusic/{id}")]
         public void DeleteMusic(Guid id)
         {
             _musicService.DeleteMusic(id);
@@ -44,7 +44,7 @@ namespace MusicCRUD.Server.Controllers
             var musicList = _musicService.GetMusicById(id);
             return musicList;
         }
-        [HttpGet("getAllMusicByAuthorName")]
+        [HttpGet("getAllMusicByAuthorName/{name}")]
         public List<MusicDto> GetAllMusicByAuthorName(string name)
         {
             var musicList = _musicService.GetAllMusicByAuthorName(name);
