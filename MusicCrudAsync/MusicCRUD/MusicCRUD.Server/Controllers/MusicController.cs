@@ -12,10 +12,12 @@ namespace MusicCRUD.Server.Controllers
     public class MusicController : ControllerBase
     {
         private IMusicService _musicService;
-        public MusicController()
+        public MusicController(IMusicService musicService)
         {
-            _musicService = new MusicService();
+            _musicService = musicService;
         }
+
+
         [HttpPost("addMusic")]
         public async Task<Guid> AddMusic(MusicDto musicDto)
         {

@@ -12,10 +12,12 @@ namespace MusicCRUD.Service.Services;
 public class MusicService : IMusicService
 {
     private IMusicRepository _musicRepository;
-    public MusicService()
+
+    public MusicService(IMusicRepository musicRepository)
     {
-        _musicRepository = new MusicRepository();
+        _musicRepository = musicRepository;
     }
+
     // DONE
     public async Task<Guid> AddMusicAsync(MusicDto musicDto)
     {

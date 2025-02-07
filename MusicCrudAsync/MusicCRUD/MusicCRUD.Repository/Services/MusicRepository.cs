@@ -1,77 +1,55 @@
-﻿using MusicCRUD.DataAccess.Entity;
+﻿using Microsoft.EntityFrameworkCore;
+using MusicCRUD.DataAccess;
+using MusicCRUD.DataAccess.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace MusicCRUD.Repository.Services;
 
 public class MusicRepository : IMusicRepository
 {
-    private readonly string _filePath;
-    private readonly string _directoryPath;
-    private readonly List<Music> _music;
-    public MusicRepository()
+    private readonly MainContext _mainContext;
+
+    public MusicRepository(MainContext mainContext)
     {
-        _filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "Music.json"); // "/" "\" 
-        _directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "Data");
-        if (!Directory.Exists(_directoryPath))
-        {
-            Directory.CreateDirectory(_directoryPath);
-        }
-        if (!File.Exists(_filePath))
-        {
-            File.WriteAllText(_filePath, "[]");
-        }
-        _music = GetAllAsync().Result;
+        _mainContext = mainContext;
     }
+
     public async Task<Guid> AddAsync(Music music)
     {
-        _music.Add(music);
-        SaveData();
+        await _mainContext.Music.AddAsync(music);
+        await _mainContext.SaveChangesAsync(); // return int intager of raws that has been changed in the database
         return music.Id;
     }
 
     public async Task DeleteAsync(Guid id)
     {
-        //var musicFromDb = GetById(id);
-        //_music.Remove(musicFromDb);
-        
-        _music.Remove(GetByIdAsync(id).Result);
-        SaveData();
+        var music = await GetByIdAsync(id);
+        _mainContext.Music.Remove(music);
+        _mainContext.SaveChanges();
     }
 
     public async Task<List<Music>> GetAllAsync()
     {
-        return JsonSerializer.Deserialize<List<Music>>(File.ReadAllText(_filePath)) ?? throw new NullReferenceException();
-
-        //var musicJson = File.ReadAllText(_filePath);
-        //var musicList = JsonSerializer.Deserialize<List<Music>>(musicJson);
-        //return musicList ?? throw new NullReferenceException();
+        var allMusic = await _mainContext.Music.ToListAsync();
+        return allMusic;
     }
 
     public async Task<Music> GetByIdAsync(Guid id)
     {
-        return _music.FirstOrDefault(ms => ms.Id == id) ?? throw new NullReferenceException();
-
-        //var music =  _music.FirstOrDefault(muz => muz.Id == id);
-        //return music ?? throw new NullReferenceException();
+        var music = await _mainContext.Music.FirstOrDefaultAsync(mus => mus.Id == id); // ?? throw new NullReferenceException();
+        if (music == null)
+            throw new NullReferenceException();
+        return music;
     }
 
     public async Task UpdateAsync(Music music)
     {
-        //var musicFromDb = GetById(music.Id);
-        //var index = _music.IndexOf(musicFromDb);
-        //_music[index] = music;
-
-        _music[_music.IndexOf(GetByIdAsync(music.Id).Result)] = music;
-        SaveData();
-    }
-    private void SaveData()
-    {
-        var musicJson = JsonSerializer.Serialize(_music);
-        File.WriteAllText(_filePath, musicJson);
+        var musicFromDb = await GetByIdAsync(music.Id);
+        _mainContext.Music.Update(musicFromDb);
+        _mainContext.SaveChanges();
     }
 }
