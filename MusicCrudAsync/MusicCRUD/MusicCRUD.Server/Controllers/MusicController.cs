@@ -19,7 +19,7 @@ namespace MusicCRUD.Server.Controllers
 
 
         [HttpPost("addMusic")]
-        public async Task<Guid> AddMusic(MusicDto musicDto)
+        public async Task<long> AddMusic(MusicDto musicDto)
         {
             var musicId = await _musicService.AddMusicAsync(musicDto);
             return musicId;
@@ -31,7 +31,7 @@ namespace MusicCRUD.Server.Controllers
             return musicList;
         }
         [HttpDelete("deleteMusic")]
-        public async void DeleteMusic(Guid id)
+        public async void DeleteMusic(long id)
         {
             await _musicService.DeleteMusicAsync(id);
         }
@@ -41,7 +41,7 @@ namespace MusicCRUD.Server.Controllers
             await _musicService.UpdateMusicAsync(musicDto);
         }
         [HttpGet("getMusicById")]
-        public async Task<MusicDto> GetMusicById(Guid id)
+        public async Task<MusicDto> GetMusicById(long id)
         {
             var musicList = await _musicService.GetMusicByIdAsync(id);
             return musicList;

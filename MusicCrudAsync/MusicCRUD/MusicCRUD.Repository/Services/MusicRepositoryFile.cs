@@ -27,14 +27,14 @@ public class MusicRepositoryFile : IMusicRepository
         }
         _music = GetAllAsync().Result;
     }
-    public async Task<Guid> AddAsync(Music music)
+    public async Task<long> AddAsync(Music music)
     {
         _music.Add(music);
         SaveData();
-        return music.Id;
+        return music.MusicId;
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(long id)
     {
         //var musicFromDb = GetById(id);
         //_music.Remove(musicFromDb);
@@ -52,9 +52,9 @@ public class MusicRepositoryFile : IMusicRepository
         //return musicList ?? throw new NullReferenceException();
     }
 
-    public async Task<Music> GetByIdAsync(Guid id)
+    public async Task<Music> GetByIdAsync(long id)
     {
-        return _music.FirstOrDefault(ms => ms.Id == id) ?? throw new NullReferenceException();
+        return _music.FirstOrDefault(ms => ms.MusicId == id) ?? throw new NullReferenceException();
 
         //var music =  _music.FirstOrDefault(muz => muz.Id == id);
         //return music ?? throw new NullReferenceException();
@@ -66,7 +66,7 @@ public class MusicRepositoryFile : IMusicRepository
         //var index = _music.IndexOf(musicFromDb);
         //_music[index] = music;
 
-        _music[_music.IndexOf(GetByIdAsync(music.Id).Result)] = music;
+        _music[_music.IndexOf(GetByIdAsync(music.MusicId).Result)] = music;
         SaveData();
     }
     private void SaveData()

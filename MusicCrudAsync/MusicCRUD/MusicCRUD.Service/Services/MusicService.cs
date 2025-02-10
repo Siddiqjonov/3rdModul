@@ -19,14 +19,14 @@ public class MusicService : IMusicService
     }
 
     // DONE
-    public async Task<Guid> AddMusicAsync(MusicDto musicDto)
+    public async Task<long> AddMusicAsync(MusicDto musicDto)
     {
         var music = ConvertToMusicEntity(musicDto);
-        Guid id = await _musicRepository.AddAsync(music);
+        long id = await _musicRepository.AddAsync(music);
         return id;
     }
     // DONE
-    public async Task DeleteMusicAsync(Guid id)
+    public async Task DeleteMusicAsync(long id)
     {
         await _musicRepository.DeleteAsync(id);
     }
@@ -89,7 +89,7 @@ public class MusicService : IMusicService
         return all.Where(mus => mus.Description.ToLower().Contains(keyword.ToLower())).ToList();
     }
     // DONE
-    public async Task<MusicDto> GetMusicByIdAsync(Guid id)
+    public async Task<MusicDto> GetMusicByIdAsync(long id)
     {
         var music = await _musicRepository.GetByIdAsync(id);
         return ConvertToMusicDto(music);
@@ -136,7 +136,7 @@ public class MusicService : IMusicService
     {
         return new Music()
         {
-            Id = musicDto.Id ?? Guid.NewGuid(),
+            MusicId = musicDto.MusicId ?? 0,
             AuthorName = musicDto.AuthorName,
             Description = musicDto.Description,
             MB = musicDto.MB,
@@ -148,7 +148,7 @@ public class MusicService : IMusicService
     {
         return new MusicDto()
         {
-            Id = music.Id,
+            MusicId = music.MusicId,
             AuthorName = music.AuthorName,
             Description = music.Description,
             MB = music.MB,

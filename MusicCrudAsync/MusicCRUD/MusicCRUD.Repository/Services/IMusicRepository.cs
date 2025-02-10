@@ -4,9 +4,9 @@ namespace MusicCRUD.Repository.Services;
 
 public interface IMusicRepository
 {
-    Task<Guid> AddAsync(Music music);
+    Task<long> AddAsync(Music music);
     Task<List<Music>> GetAllAsync();
-    Task DeleteAsync(Guid id);
+    Task DeleteAsync(long id);
     Task UpdateAsync(Music music);
-    Task<Music> GetByIdAsync(Guid id);
+    Task<Music> GetByIdAsync(long id);
 }

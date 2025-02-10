@@ -1,6 +1,7 @@
 
 using MusicCRUD.DataAccess;
 using MusicCRUD.Repository.Services;
+using MusicCRUD.Server.Configurations;
 using MusicCRUD.Service.Services;
 
 namespace MusicCRUD.Server
@@ -18,10 +19,16 @@ namespace MusicCRUD.Server
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.ConfigureDatabase();
+
             builder.Services.AddScoped<IMusicService, MusicService>();
-            //builder.Services.AddScoped<IMusicRepository, MusicRepository>();
-            builder.Services.AddSingleton<MainContext>();
-            builder.Services.AddScoped<IMusicRepository, MusicRepositoryFile>();
+            builder.Services.AddScoped<IMusicRepository, MusicRepository>();
+
+            builder.Services.AddScoped<ICommentService, CommentService>();
+            builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+
+            //builder.Services.AddScoped<IMusicRepository, MusicRepositoryFile>();
+            //builder.Services.AddSingleton<MainContext>();
 
 
             var app = builder.Build();

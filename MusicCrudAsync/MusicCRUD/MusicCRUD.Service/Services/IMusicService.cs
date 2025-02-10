@@ -4,11 +4,11 @@ namespace MusicCRUD.Service.Services;
 
 public interface IMusicService
 {
-    Task<Guid> AddMusicAsync(MusicDto musicDto);
+    Task<long> AddMusicAsync(MusicDto musicDto);
     Task<List<MusicDto>> GetAllMusicAsync();
-    Task DeleteMusicAsync(Guid id);
+    Task DeleteMusicAsync(long id);
     Task UpdateMusicAsync(MusicDto musicDto);
-    Task<MusicDto> GetMusicByIdAsync(Guid id);
+    Task<MusicDto> GetMusicByIdAsync(long id);
     Task<List<MusicDto>> GetAllMusicByAuthorNameAsync(string name);
     Task<MusicDto> GetMostLikedMusicAsync();
     Task<MusicDto> GetMusicByNameAsync(string name);

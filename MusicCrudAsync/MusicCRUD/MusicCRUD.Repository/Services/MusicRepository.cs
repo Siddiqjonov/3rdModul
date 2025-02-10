@@ -18,14 +18,14 @@ public class MusicRepository : IMusicRepository
         _mainContext = mainContext;
     }
 
-    public async Task<Guid> AddAsync(Music music)
+    public async Task<long> AddAsync(Music music)
     {
         await _mainContext.Music.AddAsync(music);
         await _mainContext.SaveChangesAsync(); // return int intager of raws that has been changed in the database
-        return music.Id;
+        return music.MusicId;
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(long id)
     {
         var music = await GetByIdAsync(id);
         _mainContext.Music.Remove(music);
@@ -38,9 +38,9 @@ public class MusicRepository : IMusicRepository
         return allMusic;
     }
 
-    public async Task<Music> GetByIdAsync(Guid id)
+    public async Task<Music> GetByIdAsync(long id)
     {
-        var music = await _mainContext.Music.FirstOrDefaultAsync(mus => mus.Id == id); // ?? throw new NullReferenceException();
+        var music = await _mainContext.Music.FirstOrDefaultAsync(mus => mus.MusicId == id); // ?? throw new NullReferenceException();
         if (music == null)
             throw new NullReferenceException();
         return music;
@@ -48,7 +48,7 @@ public class MusicRepository : IMusicRepository
 
     public async Task UpdateAsync(Music music)
     {
-        var musicFromDb = await GetByIdAsync(music.Id);
+        var musicFromDb = await GetByIdAsync(music.MusicId);
         _mainContext.Music.Update(musicFromDb);
         _mainContext.SaveChanges();
     }
